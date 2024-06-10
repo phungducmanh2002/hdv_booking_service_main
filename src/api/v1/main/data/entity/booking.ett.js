@@ -48,6 +48,8 @@ BookingEtt.init(
     sequelize: SQLZConfig.SQLZInstance,
     freezeTableName: true,
     tableName: "booking",
+    createdAt: false,
+    updatedAt: false,
   }
 );
 

@@ -34,8 +34,8 @@ BookRoomEtt.init(
         fields: ["idBooking", "idRoom"],
       },
     ],
-    createdAt: true,
-    updatedAt: true,
+    createdAt: false,
+    updatedAt: false,
   }
 );
 

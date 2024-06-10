@@ -5,7 +5,7 @@ const router = Router();
 
 router.get("/:idHotel/bookings", HotelCTL.getAllBookings);
 router.get(
-  "/:idHotel/room-class/:idRoomClass/rooms/can-booking",
+  "/:idHotel/room-classes/:idRoomClass/rooms/can-booking",
   HotelCTL.getAllRoomsCanBooking
 );
 
