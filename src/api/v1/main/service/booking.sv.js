@@ -188,7 +188,10 @@ class BookingSV {
     });
   }
   static async getAllHotelBookings(idHotel, status) {
-    const rooms = await HotelAPI.getRooms(idHotel);
+    const rooms = (await HotelAPI.getRooms(idHotel)).data.data;
+    if (!rooms) {
+      throw { message: "gọi api hotel rooms thất bại" };
+    }
     const idRooms = rooms.map((room) => room.id);
     return await BookingSV.getAllRoomBookings(idRooms, status);
   }
@@ -237,7 +240,7 @@ class BookingSV {
      * get all rooms from hotel server
      * filter
      */
-    const res = await HotelAPI.getRooms(idHotel, idRoomClass);
+    const res = await HotelAPI.getHotelRoomByRoomClass(idHotel, idRoomClass);
     const rooms = res.data.data;
     const booksRoom = await BookingSV.getAllBooksRoom(
       startTimeDate,

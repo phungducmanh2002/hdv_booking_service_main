@@ -20,18 +20,20 @@ class HotelAPI {
   }
 
   static async getRooms(idHotel) {
-    return new Promise((resolve, reject) => {
-      const arr = DataHelper.getArrRandom(10, 2);
-      const rooms = arr.map((num) => {
-        return {
-          id: num,
-        };
-      });
-      resolve(rooms);
-    });
+    const url = `${HotelAPI.baseUrl}/hotels/${idHotel}/rooms`;
+    return axios.get(url);
+    // return new Promise((resolve, reject) => {
+    //   const arr = DataHelper.getArrRandom(10, 2);
+    //   const rooms = arr.map((num) => {
+    //     return {
+    //       id: num,
+    //     };
+    //   });
+    //   resolve(rooms);
+    // });
   }
 
-  static async getRooms(idHotel, idRoomClass) {
+  static async getHotelRoomByRoomClass(idHotel, idRoomClass) {
     const url = `${HotelAPI.baseUrl}/hotels/${idHotel}/room-classes/${idRoomClass}/rooms`;
     return axios.get(url);
 
