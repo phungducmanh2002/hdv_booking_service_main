@@ -24,6 +24,7 @@ class HotelCTL {
         const endTime = req.query.endTime;
         const startTimeDate = new Date(startTime);
         const endTimeDate = new Date(endTime);
+
         if (startTimeDate.getTime() > endTimeDate.getTime()) {
           return res.json(
             RES.BadRequest.setMessage("invalid start time & end time")
@@ -42,6 +43,7 @@ class HotelCTL {
           startTimeDate,
           endTimeDate
         );
+
         res.json(RES.Oke.setData(rooms));
       } catch (error) {
         next(error);

@@ -24,10 +24,11 @@ class BookingSV {
       for (let i = 0; i < idRooms.length; i++) {
         const idRoom = idRooms[i];
         const r = await HotelAPI.getRoomPrice(idRoom);
+        const room = r.data.data;
         bookRooms.push({
           idBooking: booking.id,
           idRoom: idRoom,
-          roomPrice: r.roomPrice,
+          roomPrice: room.roomPrice,
         });
       }
       await BookRoomEtt.bulkCreate(bookRooms, { transaction: t });
@@ -68,6 +69,7 @@ class BookingSV {
     const bk = await BookingEtt.findByPk(id);
     let isFailed = false;
     newStatus = parseInt(newStatus);
+
     switch (newStatus) {
       case 2: {
         if (bk.status == 1) {
@@ -94,16 +96,8 @@ class BookingSV {
         break;
       }
       case 5: {
-        if (bk.status == 4) {
-          bk.status = 5;
-        } else {
-          isFailed = true;
-        }
-        break;
-      }
-      case 6: {
         if (bk.status == 1 || bk.status == 2) {
-          bk.status = 6;
+          bk.status = 5;
         } else {
           isFailed = true;
         }
@@ -243,11 +237,15 @@ class BookingSV {
      * get all rooms from hotel server
      * filter
      */
-    const rooms = await HotelAPI.getRooms(idHotel, idRoomClass);
+    const res = await HotelAPI.getRooms(idHotel, idRoomClass);
+    const rooms = res.data.data;
     const booksRoom = await BookingSV.getAllBooksRoom(
       startTimeDate,
       endTimeDate
     );
+    booksRoom.map((e) => {
+      console.log(e.get({ plain: true }));
+    });
     const idRooms = rooms.map((room) => room.id);
     const idRoomsBook = booksRoom.map((roomBook) => roomBook.idRoom);
     let result = rooms.filter((item) => !idRoomsBook.includes(item.id));

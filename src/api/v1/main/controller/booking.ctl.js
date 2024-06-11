@@ -55,8 +55,8 @@ class BookingCTL {
         );
 
         if (bk) {
-          const newBooking = await BookingSV.getDetail(bk.id);
-          res.json(RES.Created.setData(newBooking));
+          // const newBooking = await BookingSV.getDetail(bk.id);
+          res.json(RES.Created.setData(bk));
         } else {
           res.json(RES.ServerError);
         }
@@ -83,8 +83,8 @@ class BookingCTL {
   static updateStatus = [
     async (req, res, next) => {
       try {
-        const idBooking = req.params.idBooking;
-        const status = req.query.status;
+        const idBooking = parseInt(req.params.idBooking);
+        const status = parseInt(req.query.status);
         const bk = await BookingSV.updateStatus(idBooking, status);
         res.json(RES.Oke.setData(bk));
       } catch (error) {
