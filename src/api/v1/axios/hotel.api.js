@@ -1,8 +1,12 @@
 const { default: axios } = require("axios");
 const DataHelper = require("../helper/data.helper");
+const FileHelper = require("../helper/file.helper");
+
+const nginxIP = FileHelper.getEnv("NGINX_IP");
+const nginxPORT = FileHelper.getEnv("NGINX_PORT");
 
 class HotelAPI {
-  static baseUrl = "http://localhost:8080/hotel";
+  static baseUrl = `http://${nginxIP}:${nginxPORT}/hotel`;
 
   static async getRoomPrice(idRoom) {
     const url = `${HotelAPI.baseUrl}/rooms/${idRoom}/room-price`;
